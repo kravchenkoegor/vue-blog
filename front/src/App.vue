@@ -17,14 +17,6 @@
         v-if="isUserLoggedIn"
         flat
         dark
-        @click="toPosts"
-      >
-        Browse
-      </v-btn>
-      <v-btn
-        v-if="isUserLoggedIn"
-        flat
-        dark
         @click="toCreate"
       >
         Create post
@@ -75,9 +67,6 @@ export default {
   methods: {
     toHome () {
       this.$router.push('/')
-    },
-    toPosts () {
-      this.$router.push('/posts')
     },
     toCreate () {
       this.$router.push('/create')

@@ -3,4 +3,5 @@
 package-lock.json
 /front/node_modules
 /front/package-lock.json
+/front/dist
 /.idea
