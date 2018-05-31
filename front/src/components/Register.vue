@@ -1,6 +1,6 @@
 <template>
   <v-layout row align-center justify-center>
-    <v-flex xs6>
+    <v-flex xs12 md6>
       <panel title="Register">
         <v-card-text>
           <v-form>

@@ -36,4 +36,16 @@ module.exports = (router) => {
   router.get('/post/:id', (req, res) => {
     PostsController.viewOne(req, res)
   })
+
+  router.get('/edit/:id', (req, res) => {
+    PostsController.viewOne(req, res)
+  })
+
+  router.post('/save', (req, res) => {
+    PostsController.savePost(req, res)
+  })
+
+  router.get('/delete/:id', (req, res) => {
+    PostsController.deletePost(req, res)
+  })
 }

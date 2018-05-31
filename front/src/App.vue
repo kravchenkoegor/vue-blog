@@ -17,7 +17,7 @@
         v-if="isUserLoggedIn"
         flat
         dark
-        to="posts"
+        @click="toPosts"
       >
         Browse
       </v-btn>
@@ -25,7 +25,7 @@
         v-if="isUserLoggedIn"
         flat
         dark
-        to="create"
+        @click="toCreate"
       >
         Create post
       </v-btn>
@@ -39,7 +39,7 @@
         </v-btn>
       </template>
       <template v-else>
-        <v-btn flat to="profile">
+        <v-btn flat @click="toProfile">
           <v-icon class="mr-1">person</v-icon>
           Profile
         </v-btn>
@@ -76,21 +76,20 @@ export default {
     toHome () {
       this.$router.push('/')
     },
+    toPosts () {
+      this.$router.push('/posts')
+    },
+    toCreate () {
+      this.$router.push('/create')
+    },
+    toProfile () {
+      this.$router.push('/profile')
+    },
     logOut () {
       this.$store.dispatch('logoutUser')
         .then(() => this.$router.push('/'))
         .catch(error => console.log(error))
     }
-    // toProfile () {
-    //   Api().get('/profile')
-    //     .then(data => {
-    //       if (data.status === 200 && data.request.readyState === 4) {
-    //         this.$router.push('/profile')
-    //       } else {
-    //         this.$router.push('/login')
-    //       }
-    //     }).catch(error => console.log(error))
-    // }
   }
 }
 </script>

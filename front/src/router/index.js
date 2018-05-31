@@ -9,6 +9,7 @@ import Error from '@/components/Error'
 import Post from '@/components/Post'
 import Posts from '@/components/Posts'
 import CreatePost from '@/components/CreatePost'
+import EditPost from '@/components/EditPost'
 
 Vue.use(Router)
 
@@ -58,13 +59,24 @@ export default new Router({
       path: '/post/:id',
       name: 'Post',
       component: Post,
-      beforeEnter: isLoggedIn,
-      props: true
+      beforeEnter: isLoggedIn
     },
     {
       path: '/create',
       name: 'CreatePost',
       component: CreatePost,
+      beforeEnter: isLoggedIn
+    },
+    {
+      path: '/edit/:id',
+      name: 'EditPost',
+      component: EditPost,
+      beforeEnter: isLoggedIn
+    },
+    {
+      path: '/delete/:id',
+      name: 'DeletePost',
+      component: EditPost,
       beforeEnter: isLoggedIn
     }
   ],

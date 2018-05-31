@@ -15,7 +15,14 @@ export default {
   },
   async single (id) {
     const response = await Api().get('/post/' + id)
-    console.log(response)
+    return response.data
+  },
+  async editPost (credentials) {
+    const response = await Api().post('/save', credentials)
+    return response.data
+  },
+  async deletePost (id) {
+    const response = await Api().get('/delete/' + id)
     return response.data
   }
 }

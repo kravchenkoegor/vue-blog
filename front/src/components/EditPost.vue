@@ -1,7 +1,7 @@
 <template>
   <v-layout row align-center justify-center>
     <v-flex xs12 md6>
-      <panel title="Create a new post">
+      <panel title="Edit a post">
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
             v-model="author"
@@ -36,9 +36,9 @@
             color="green"
             dark
           >
-            submit
+            save
           </v-btn>
-          <v-btn @click="clear">clear</v-btn>
+          <v-btn @click="clear">Cancel</v-btn>
         </v-form>
       </panel>
     </v-flex>
@@ -46,37 +46,45 @@
 </template>
 
 <script>
-import PostService from '../services/PostService'
-export default {
-  name: 'CreatePost',
-  data: () => ({
-    valid: true,
-    author: '',
-    created: '',
-    title: '',
-    image: '',
-    text: ''
-  }),
+  import PostService from '../services/PostService'
+  export default {
+    name: 'EditPost',
+    data: () => ({
+      valid: true,
+      author: '',
+      created: '',
+      title: '',
+      image: '',
+      text: ''
+    }),
 
-  methods: {
-    submit () {
-      if (this.$refs.form.validate()) {
-        const newPost = {
-          author: this.author,
-          created: this.created,
-          title: this.title,
-          image: this.image,
-          text: this.text
+    methods: {
+      submit () {
+        if (this.$refs.form.validate()) {
+          const newPost = {
+            author: this.author,
+            created: this.created,
+            title: this.title,
+            image: this.image,
+            text: this.text
+          }
+          PostService.editPost(newPost)
+            .then(() => this.$router.push('/post/' + this.$route.params.id))
         }
-        PostService.createPost(newPost)
-          .then(() => this.$router.push('posts'))
+      },
+      clear () {
+        this.$refs.form.reset()
       }
     },
-    clear () {
-      this.$refs.form.reset()
+    async mounted () {
+      const result = await PostService.single(this.$route.params.id)
+      this.author = result.author
+      this.created = result.created
+      this.title = result.title
+      this.image = result.image
+      this.text = result.text
     }
   }
-}
 </script>
 
 <style scoped>

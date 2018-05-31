@@ -8,13 +8,17 @@
           <v-card-title primary-title>
             <div>
               <h3 class="headline mb-0">{{post.title}}</h3>
-              <span>{{post.created}}</span> by <span>{{post.author}}</span>
+              <div class="my-2">
+                <span>{{ post.created | moment("MMMM Do YYYY")}}</span> by <span>{{post.author}}</span>
+              </div>
               <div>{{post.text}}</div>
             </div>
           </v-card-title>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn flat color="orange" @click="single(post._id)">Подробнее</v-btn>
+            <v-btn flat color="red" @click="remove(post._id)">Delete</v-btn>
+            <v-btn flat color="orange" @click="edit(post._id)">Edit</v-btn>
+            <v-btn flat color="blue" @click="single(post._id)">More</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -46,6 +50,14 @@ export default {
     },
     single (id) {
       this.$router.push('/post/' + id)
+    },
+    edit (id) {
+      this.$router.push('/edit/' + id)
+    },
+    async remove (id) {
+      PostService.deletePost(id)
+        .then(() => this.$router.push('/posts'))
+        .catch(error => console.log(error))
     }
   },
   // request posts from database

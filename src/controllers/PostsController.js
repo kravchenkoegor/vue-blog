@@ -46,5 +46,27 @@ module.exports = {
         error: `An error has occured ${error}`
       })
     }
+  },
+  async savePost (req, res) {
+    try {
+      const post = await Post.findOneAndUpdate({created: req.body.created}, req.body)
+      post.save()
+      res.send(post.toJSON())
+    } catch (error) {
+      res.status(400).send({
+        error: `An error has occured ${error}`
+      })
+    }
+  },
+  async deletePost (req, res) {
+    try {
+      const post = await Post.findOneAndRemove({_id: req.params.id})
+      //post.save()
+      res.send(post.toJSON())
+    } catch (error) {
+      res.status(400).send({
+        error: `An error has occured ${error}`
+      })
+    }
   }
 }
