@@ -7,7 +7,6 @@ import Register from '@/components/Register'
 import Profile from '@/components/Profile'
 import Error from '@/components/Error'
 import Post from '@/components/Post'
-import Posts from '@/components/Posts'
 import CreatePost from '@/components/CreatePost'
 import EditPost from '@/components/EditPost'
 
@@ -48,12 +47,6 @@ export default new Router({
       path: '/error',
       name: 'Error',
       component: Error
-    },
-    {
-      path: '/posts',
-      name: 'Posts',
-      component: Posts,
-      beforeEnter: isLoggedIn
     },
     {
       path: '/post/:id',

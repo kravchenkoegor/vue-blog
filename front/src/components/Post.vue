@@ -71,7 +71,6 @@ export default {
       this.$store.dispatch('setLoading', false)
       this.post = result
     }
-    console.log(this.isAuthor)
   }
 
 }

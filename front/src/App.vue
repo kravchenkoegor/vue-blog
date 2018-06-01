@@ -1,24 +1,44 @@
 <template>
   <v-app id="app">
-    <!--<v-navigation-drawer-->
-      <!--app-->
-      <!--v-model="drawer"-->
-    <!--&gt;-->
-    <!--</v-navigation-drawer>-->
-      <v-toolbar app dark class="primary">
-        <!--<v-toolbar-side-icon-->
-        <!--@click.stop="drawer = !drawer"-->
-        <!--&gt;-->
-        <!--</v-toolbar-side-icon>-->
-        <v-toolbar-title @click="toHome" class="pointer">
-          <h4>Application</h4>
-        </v-toolbar-title>
+    <v-navigation-drawer app v-model="drawer" class="hidden-md-and-down">
+      <v-list v-if="isUserLoggedIn">
+        <v-list-tile class="text-xs-center" @click="toCreate">
+          <v-btn color="primary" flat>
+            <v-icon class="mr-1">create</v-icon>
+            Create post
+          </v-btn>
+        </v-list-tile>
+        <v-list-tile class="text-xs-center" @click="toProfile">
+          <v-btn color="primary" flat>
+            <v-icon class="mr-1">person</v-icon>
+            Profile
+          </v-btn>
+        </v-list-tile>
+        <v-list-tile class="text-xs-center" @click="logOut">
+          <v-btn color="primary" flat >
+            <v-icon class="mr-1">exit_to_app</v-icon>
+            Log Out
+          </v-btn>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    <v-toolbar app dark class="primary">
+      <v-toolbar-side-icon
+        @click.stop="drawer = !drawer"
+        class="hidden-md-and-up"
+      >
+      </v-toolbar-side-icon>
+      <v-toolbar-title @click="toHome" class="pointer">
+        <h4>Application</h4>
+      </v-toolbar-title>
+      <div class="hidden-md-and-down d-flex">
         <v-btn
           v-if="isUserLoggedIn"
           flat
           dark
           @click="toCreate"
         >
+          <v-icon class="mr-1">create</v-icon>
           Create post
         </v-btn>
         <v-spacer></v-spacer>
@@ -36,10 +56,12 @@
             Profile
           </v-btn>
           <v-btn flat @click="logOut">
+            <v-icon class="mr-1">exit_to_app</v-icon>
             Log Out
           </v-btn>
         </template>
-      </v-toolbar>
+      </div>
+    </v-toolbar>
     <v-content>
       <v-container fluid>
         <router-view>

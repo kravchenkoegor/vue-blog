@@ -58,7 +58,7 @@ export default {
           text: this.text
         }
         PostService.createPost(newPost)
-          .then(() => this.$router.push('posts'))
+          .then(() => this.$router.push('/'))
       }
     },
     clear () {
