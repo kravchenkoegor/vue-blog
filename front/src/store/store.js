@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     token: localStorage.getItem('jwtToken') || null,
-    user: null
+    user: null,
+    isLoading: false
   },
   mutations: {
     setUser (state, user) {
@@ -14,12 +15,16 @@ export default new Vuex.Store({
     },
     setToken (state, token) {
       state.token = token
+    },
+    setLoading (state, loading) {
+      state.isLoading = loading
     }
   },
   actions: {
     loginUser ({commit}, {user, token}) {
       commit('setUser', user)
       localStorage.setItem('jwtToken', token)
+      localStorage.setItem('user', JSON.stringify(user))
     },
     logoutUser ({commit}) {
       commit('setUser', null)
@@ -28,6 +33,9 @@ export default new Vuex.Store({
     },
     setToken ({commit}, token) {
       commit('setToken', token)
+    },
+    setLoading ({commit}, loading) {
+      commit('setLoading', loading)
     }
   },
   getters: {
@@ -39,6 +47,9 @@ export default new Vuex.Store({
     },
     getUser (state) {
       return state.user
+    },
+    isLoading (state) {
+      return state.isLoading
     }
   }
 })

@@ -5,6 +5,14 @@
         <v-card-text>
           <v-form>
             <v-text-field
+              prepend-icon="person"
+              name="username"
+              label="Username"
+              type="text"
+              v-model="username"
+            >
+            </v-text-field>
+            <v-text-field
               prepend-icon="email"
               name="email"
               label="Email"
@@ -43,6 +51,7 @@ export default {
   name: 'Register',
   data: () => ({
     title: 'Register',
+    username: '',
     email: '',
     password: '',
     error: null
@@ -51,6 +60,7 @@ export default {
     async register () {
       try {
         await AuthenticationService.register({
+          username: this.username,
           email: this.email,
           password: this.password
         })

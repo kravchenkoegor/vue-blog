@@ -1,24 +1,27 @@
 <template>
-  <div>
+  <v-container v-if="!isLoading" v-bind="{ [`grid-list-${size}`]: true }">
     <v-layout row justify-center wrap>
-      <v-flex xs12 md3 v-for="post in posts" :key="post._id" class="mr-2 mb-2">
-        <v-card class="hover-elevation">
+      <v-flex xs12 md6 lg3
+              v-for="post in posts"
+              :key="post._id"
+              grid-list-md
+              class="mb-2">
+        <v-card class="hover-elevation card">
           <v-card-media :src="post.image" height="200px">
           </v-card-media>
           <v-card-title primary-title>
-            <div>
-              <h3 class="headline mb-0">{{post.title}}</h3>
-              <div class="my-2">
-                <span>{{ post.created | moment("MMMM Do YYYY")}}</span> by <span>{{post.author}}</span>
-              </div>
-              <div>{{post.text}}</div>
-            </div>
+            <h3 class="headline mb-0">{{post.title}}</h3>
           </v-card-title>
+          <v-card-text>
+            <div class="pb-2">
+              <span>{{ post.created | moment("MMMM Do YYYY")}} by {{post.author}}</span>
+            </div>
+            <v-divider></v-divider>
+            <div class="pt-2 text">{{post.text}}</div>
+          </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn flat color="red" @click="remove(post._id)">Delete</v-btn>
-            <v-btn flat color="orange" @click="edit(post._id)">Edit</v-btn>
-            <v-btn flat color="blue" @click="single(post._id)">More</v-btn>
+            <v-btn flat color="primary" @click="single(post._id)">More</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -32,7 +35,12 @@
         ></v-pagination>
       </div>
     </v-flex>
-  </div>
+  </v-container>
+  <v-container v-else>
+    <v-layout row align-center justify-center class="full-height">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -42,33 +50,56 @@
     data: () => ({
       posts: null,
       page: 1,
-      length: 1
+      length: 1,
+      size: 'md'
     }),
+    computed: {
+      isLoading () {
+        return this.$store.getters.isLoading
+      }
+    },
     methods: {
       async next () {
         this.posts = await PostService.changePage({page: this.page})
       },
       single (id) {
         this.$router.push('/post/' + id)
-      },
-      edit (id) {
-        this.$router.push('/edit/' + id)
-      },
-      async remove (id) {
-        PostService.deletePost(id)
-          .then(() => this.$router.push('/posts'))
-          .catch(error => console.log(error))
       }
     },
     // request posts from database
     async mounted () {
+      this.$store.dispatch('setLoading', true)
       const result = await PostService.index()
-      this.posts = result.posts
-      this.length = Math.ceil(result.count / 9)
+      if (result) {
+        this.$store.dispatch('setLoading', false)
+        this.posts = result.posts
+        this.length = Math.ceil(result.count / 9)
+      }
     }
   }
 </script>
 
 <style scoped>
+  .full-height {
+    height: 100vh;
+  }
 
+  @media screen and (min-width: 960px) {
+    .headline {
+      height: 64px;
+      overflow: hidden;
+    }
+
+    .card {
+      height: 510px !important;
+    }
+
+    .text {
+      height: 92px;
+      white-space: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+    }
+  }
 </style>

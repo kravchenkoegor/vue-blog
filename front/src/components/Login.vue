@@ -55,11 +55,8 @@ export default {
         }
         await AuthenticationService.login(user)
           .then(data => this.$store.dispatch('loginUser', data))
-          .catch(error => console.log(error))
           .then(() => this.$store.dispatch('setToken', localStorage.getItem('jwtToken')))
-          .catch(error => console.log(error))
           .then(() => this.$router.push('/'))
-          .catch(error => console.log(error))
       } catch (error) {
         this.error = error.response.data.error
         console.log(this.error)

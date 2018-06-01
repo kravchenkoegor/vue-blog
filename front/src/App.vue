@@ -5,41 +5,41 @@
       <!--v-model="drawer"-->
     <!--&gt;-->
     <!--</v-navigation-drawer>-->
-    <v-toolbar app dark class="primary">
-      <!--<v-toolbar-side-icon-->
+      <v-toolbar app dark class="primary">
+        <!--<v-toolbar-side-icon-->
         <!--@click.stop="drawer = !drawer"-->
-      <!--&gt;-->
-      <!--</v-toolbar-side-icon>-->
-      <v-toolbar-title @click="toHome" class="pointer">
-        <h4>Application</h4>
-      </v-toolbar-title>
-      <v-btn
-        v-if="isUserLoggedIn"
-        flat
-        dark
-        @click="toCreate"
-      >
-        Create post
-      </v-btn>
-      <v-spacer></v-spacer>
-      <template v-if="!isUserLoggedIn">
-        <v-btn flat to="login">
-          Log In
+        <!--&gt;-->
+        <!--</v-toolbar-side-icon>-->
+        <v-toolbar-title @click="toHome" class="pointer">
+          <h4>Application</h4>
+        </v-toolbar-title>
+        <v-btn
+          v-if="isUserLoggedIn"
+          flat
+          dark
+          @click="toCreate"
+        >
+          Create post
         </v-btn>
-        <v-btn flat to="register">
-          Register
-        </v-btn>
-      </template>
-      <template v-else>
-        <v-btn flat @click="toProfile">
-          <v-icon class="mr-1">person</v-icon>
-          Profile
-        </v-btn>
-        <v-btn flat @click="logOut">
-          Log Out
-        </v-btn>
-      </template>
-    </v-toolbar>
+        <v-spacer></v-spacer>
+        <template v-if="!isUserLoggedIn">
+          <v-btn flat to="login">
+            Log In
+          </v-btn>
+          <v-btn flat to="register">
+            Register
+          </v-btn>
+        </template>
+        <template v-else>
+          <v-btn flat @click="toProfile">
+            <v-icon class="mr-1">person</v-icon>
+            Profile
+          </v-btn>
+          <v-btn flat @click="logOut">
+            Log Out
+          </v-btn>
+        </template>
+      </v-toolbar>
     <v-content>
       <v-container fluid>
         <router-view>

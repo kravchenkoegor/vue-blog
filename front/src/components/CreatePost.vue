@@ -4,16 +4,6 @@
       <panel title="Create a new post">
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
-            v-model="author"
-            label="author"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="created"
-            label="created"
-            required
-          ></v-text-field>
-          <v-text-field
             v-model="title"
             label="title"
             required
@@ -51,8 +41,7 @@ export default {
   name: 'CreatePost',
   data: () => ({
     valid: true,
-    author: '',
-    created: '',
+    author: JSON.parse(localStorage.getItem('user')).username,
     title: '',
     image: '',
     text: ''
@@ -63,7 +52,7 @@ export default {
       if (this.$refs.form.validate()) {
         const newPost = {
           author: this.author,
-          created: this.created,
+          created: new Date(),
           title: this.title,
           image: this.image,
           text: this.text
