@@ -4,32 +4,21 @@
       <panel title="Edit a post">
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
-            v-model="author"
-            label="author"
+            v-model="post.title"
+            label="Title"
             required
           ></v-text-field>
           <v-text-field
-            v-model="created"
-            label="created"
+            v-model="post.image"
+            label="Image"
             required
           ></v-text-field>
           <v-text-field
-            v-model="title"
-            label="title"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="image"
-            label="image"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="text"
-            label="text"
+            v-model="post.text"
+            label="Text"
             multi-line
             required
           ></v-text-field>
-
           <v-btn
             :disabled="!valid"
             @click="submit"
@@ -38,7 +27,7 @@
           >
             save
           </v-btn>
-          <v-btn @click="clear">Cancel</v-btn>
+          <v-btn @click="backToPost">Cancel</v-btn>
         </v-form>
       </panel>
     </v-flex>
@@ -51,38 +40,32 @@
     name: 'EditPost',
     data: () => ({
       valid: true,
-      author: '',
-      created: '',
-      title: '',
-      image: '',
-      text: ''
+      post: {
+        title: '',
+        image: '',
+        text: ''
+      }
     }),
-
     methods: {
       submit () {
         if (this.$refs.form.validate()) {
           const newPost = {
-            author: this.author,
-            created: this.created,
-            title: this.title,
-            image: this.image,
-            text: this.text
+            id: this.$route.params.id,
+            title: this.post.title,
+            image: this.post.image,
+            text: this.post.text
           }
-          PostService.editPost(newPost)
-            .then(() => this.$router.push('/post/' + this.$route.params.id))
+          PostService.savePost(newPost)
+            .then(() => this.backToPost())
+            .catch(error => console.log(error))
         }
       },
-      clear () {
-        this.$refs.form.reset()
+      backToPost () {
+        this.$router.push('/post/' + this.$route.params.id)
       }
     },
-    async mounted () {
-      const result = await PostService.single(this.$route.params.id)
-      this.author = result.author
-      this.created = result.created
-      this.title = result.title
-      this.image = result.image
-      this.text = result.text
+    async created () {
+      this.post = await PostService.single(this.$route.params.id)
     }
   }
 </script>

@@ -6,7 +6,7 @@ module.exports = {
   async register (req, res) {
     try {
       const user = await new database.User(req.body).save()
-      res.send(user.toJSON())
+      res.json(user)
     } catch (error) {
       res.status(400).send({
         error: `An error has occured ${error}`
@@ -37,6 +37,27 @@ module.exports = {
               res.json({ success: false, message: 'Wrong password' })
             })
       }
+    } catch (error) {
+      res.status(400).send({
+        error: `An error has occured ${error}`
+      })
+    }
+  },
+  async getUser (req, res) {
+    try {
+      const user = await database.User.findById(req.body.id)
+      res.json(user)
+    } catch (error) {
+      res.status(400).send({
+        error: `An error has occured ${error}`
+      })
+    }
+  },
+  async saveUser (req, res) {
+    try {
+      const newUser = await database.User.findByIdAndUpdate(req.body._id, req.body)
+      console.log(newUser)
+      res.json({ success: true, message: 'User has been updated' })
     } catch (error) {
       res.status(400).send({
         error: `An error has occured ${error}`

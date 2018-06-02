@@ -2,7 +2,6 @@ require('dotenv').config()
 const path = require('path')
 const AuthenticationController = require('./controllers/AuthenticationController')
 const PostsController = require('./controllers/PostsController')
-const SongsController = require('./controllers/SongsController')
 
 module.exports = (router) => {
   router.get('/', (req, res) => {
@@ -15,10 +14,6 @@ module.exports = (router) => {
 
   router.post('/login', (req, res) => {
     AuthenticationController.login(req, res)
-  })
-
-  router.get('/songs', (req, res) => {
-    SongsController.index(req, res)
   })
 
   router.get('/posts', (req, res) => {
@@ -41,11 +36,19 @@ module.exports = (router) => {
     PostsController.viewOne(req, res)
   })
 
-  router.post('/save', (req, res) => {
+  router.post('/save_post', (req, res) => {
     PostsController.savePost(req, res)
   })
 
   router.get('/delete/:id', (req, res) => {
     PostsController.deletePost(req, res)
+  })
+
+  router.post('/user', (req, res) => {
+    AuthenticationController.getUser(req, res)
+  })
+
+  router.post('/save_user', (req, res) => {
+    AuthenticationController.saveUser(req, res)
   })
 }

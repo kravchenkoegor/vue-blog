@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 app.use(cors())
 app.use(router)
-app.use(express.static('public'))
+app.use(express.static('static'))
 app.use('/static', express.static(path.join(__dirname, 'static')))
 
 // Passport

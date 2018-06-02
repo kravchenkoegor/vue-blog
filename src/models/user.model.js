@@ -16,7 +16,10 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  fullName: String,
+  location: String,
+  dateOfBirth: String
 })
 
 // Encrypt password before saving to database

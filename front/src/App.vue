@@ -1,83 +1,71 @@
 <template>
   <v-app id="app">
-    <!--<v-navigation-drawer-->
-      <!--app-->
-      <!--v-model="drawer"-->
-      <!--v-if="isUserLoggedIn"-->
-    <!--&gt;-->
-      <!--<v-list >-->
-        <!--<v-list-tile class="text-xs-center" @click="toCreate">-->
-          <!--<v-btn color="primary" flat>-->
-            <!--<v-icon class="mr-1">create</v-icon>-->
-            <!--Create post-->
-          <!--</v-btn>-->
-        <!--</v-list-tile>-->
-        <!--<v-list-tile class="text-xs-center" @click="toProfile">-->
-          <!--<v-btn color="primary" flat>-->
-            <!--<v-icon class="mr-1">person</v-icon>-->
-            <!--Profile-->
-          <!--</v-btn>-->
-        <!--</v-list-tile>-->
-        <!--<v-list-tile class="text-xs-center" @click="logOut">-->
-          <!--<v-btn color="primary" flat >-->
-            <!--<v-icon class="mr-1">exit_to_app</v-icon>-->
-            <!--Log Out-->
-          <!--</v-btn>-->
-        <!--</v-list-tile>-->
-      <!--</v-list>-->
-    <!--</v-navigation-drawer>-->
-    <v-toolbar app dark class="primary">
+
+    <v-navigation-drawer app temporary v-model="drawer">
+      <v-list>
+        <v-list-tile
+          v-for="link of links"
+          :key="link.title"
+          :to="link.url"
+        >
+          <v-list-tile-action>
+            <v-icon>{{link.icon}}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title v-text="link.title"></v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile v-if="isUserLoggedIn" @click="logOut">
+          <v-list-tile-action>
+            <v-icon>exit_to_app</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title v-text="'Log Out'"></v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-toolbar app dark color="primary">
       <v-toolbar-side-icon
-        @click.stop="drawer = !drawer"
-        v-if="isUserLoggedIn"
+        @click="drawer = !drawer"
         class="hidden-md-and-up"
-      >
-      </v-toolbar-side-icon>
-      <v-toolbar-title @click="toHome" class="pointer hidden-sm-and-down">
-        <h4>Application</h4>
+      ></v-toolbar-side-icon>
+      <v-toolbar-title>
+        <router-link to="/" tag="span" class="pointer">Vue.js Blog</router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="hidden-md-and-down d-flex">
+      <v-toolbar-items class="hidden-sm-and-down">
         <v-btn
-          v-if="isUserLoggedIn"
+          v-for="link in links"
+          :key="link.title"
+          :to="link.url"
           flat
-          dark
-          @click="toCreate"
         >
-          <v-icon class="mr-1">create</v-icon>
-          Create post
+          <v-icon left>{{link.icon}}</v-icon>
+          {{link.title}}
         </v-btn>
-        <v-spacer></v-spacer>
-        <template v-if="!isUserLoggedIn">
-          <v-btn flat to="login">
-            Log In
-          </v-btn>
-          <v-btn flat to="register">
-            Register
-          </v-btn>
-        </template>
-        <template v-else>
-          <v-btn flat @click="toProfile">
-            <v-icon class="mr-1">person</v-icon>
-            Profile
-          </v-btn>
-          <v-btn flat @click="logOut">
-            <v-icon class="mr-1">exit_to_app</v-icon>
-            Log Out
-          </v-btn>
-        </template>
-      </div>
+        <v-btn
+          @click="logOut"
+          flat
+          v-if="isUserLoggedIn"
+        >
+          <v-icon left>exit_to_app</v-icon>
+          Logout
+        </v-btn>
+      </v-toolbar-items>
     </v-toolbar>
+
     <v-content>
-      <v-container fluid>
-        <router-view>
-        </router-view>
+      <v-container>
+        <router-view></router-view>
       </v-container>
     </v-content>
   </v-app>
 </template>
 
 <script>
+import PostService from './services/PostService'
 import Panel from './components/Panel'
 export default {
   name: 'App',
@@ -90,22 +78,32 @@ export default {
   computed: {
     isUserLoggedIn () {
       return this.$store.getters.isUserLoggedIn
+    },
+    links () {
+      if (this.isUserLoggedIn) {
+        return [
+          {title: 'Create post', icon: 'create', url: '/create'},
+          {title: 'Profile', icon: 'person', url: '/profile'}
+        ]
+      }
+      return [
+        {title: 'Log In', icon: 'lock', url: '/login'},
+        {title: 'Register', icon: 'person_add', url: '/register'}
+      ]
     }
   },
   methods: {
-    toHome () {
-      this.$router.push('/')
-    },
-    toCreate () {
-      this.$router.push('/create')
-    },
-    toProfile () {
-      this.$router.push('/profile')
-    },
     logOut () {
       this.$store.dispatch('logoutUser')
         .then(() => this.$router.push('/'))
         .catch(error => console.log(error))
+    }
+  },
+  async mounted () {
+    if (localStorage.getItem('user')) {
+      const userID = JSON.parse(localStorage.getItem('user'))._id
+      const user = await PostService.getUser({id: userID})
+      return this.$store.dispatch('setUser', user)
     }
   }
 }

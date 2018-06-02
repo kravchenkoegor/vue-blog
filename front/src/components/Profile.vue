@@ -1,47 +1,81 @@
 <template>
-    <v-layout row>
-      <v-flex xs12 md4>
-        <v-avatar
-          :size="size"
-          color="grey lighten-4"
-        >
+  <v-container>
+    <v-layout row wrap>
+
+      <v-flex xs12 md4 class="text-xs-center">
+        <v-avatar :size="size">
           <img src="https://static.licdn.com/scds/common/u/images/themes/katy/ghosts/person/ghost_person_200x200_v1.png" alt="avatar">
         </v-avatar>
       </v-flex>
-      <v-flex xs12 md4>
-        <v-card class="hover-elevation">
-          <v-card-title primary-title>
-            <h1 class="headline mb-0">1</h1>
-          </v-card-title>
-          <!--<v-card-text>-->
-            <!--<div class="mb-2">-->
-              <!--<span>{{ post.created | moment("MMMM Do YYYY")}}</span> by <a href="#">{{post.author}}</a>-->
-            <!--</div>-->
-            <!--<div>{{post.text}}</div>-->
-          <!--</v-card-text>-->
-          <v-btn @click="User">
-            Click
-          </v-btn>
-        </v-card>
+
+      <v-flex xs12 md8>
+        <v-list two-line subheader>
+          <v-list-tile v-for="item in items" :key="item.title" avatar @click="">
+            <v-list-tile-avatar>
+              <v-icon color="primary">{{ item.icon }}</v-icon>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+              <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <div class="text-xs-right">
+            <v-btn :to="'/edit_user'" dark color="primary" class="mt-2">Edit info</v-btn>
+          </div>
+        </v-list>
       </v-flex>
+
     </v-layout>
+  </v-container>
 </template>
 
 <script>
+import store from '@/store/store'
 export default {
   name: 'Profile',
   data: () => ({
     size: 200,
-    user: this.getUser
+    user: {},
+    items: []
   }),
+  methods: {
+    setData (user) {
+      this.user = user
+      this.items = [
+        { icon: 'alternate_email', title: 'E-mail', subtitle: this.user.email },
+        { icon: 'person', title: 'Username', subtitle: this.user.username },
+        { icon: 'face', title: 'Full Name', subtitle: this.user.fullName ? this.user.fullName : 'No information' },
+        { icon: 'calendar_today', title: 'Date of Birth', subtitle: this.user.dateOfBirth ? this.user.dateOfBirth : 'No information' },
+        { icon: 'location_on', title: 'Location', subtitle: this.user.location ? this.user.location : 'No information' }
+      ]
+    }
+  },
   computed: {
+    isLoading () {
+      return this.$store.getters.isLoading
+    },
     getUser () {
       return this.$store.getters.getUser
     }
   },
-  methods: {
-    User () {
-      console.log(this.user)
+  watch: {
+    getUser (newValue) {
+      this.user = newValue
+      this.items = [
+        { icon: 'alternate_email', title: 'E-mail', subtitle: this.user.email },
+        { icon: 'person', title: 'Username', subtitle: this.user.username },
+        { icon: 'face', title: 'Full Name', subtitle: this.user.fullName ? this.user.fullName : 'No information' },
+        { icon: 'calendar_today', title: 'Date of Birth', subtitle: this.user.dateOfBirth ? this.user.dateOfBirth : 'No information' },
+        { icon: 'location_on', title: 'Location', subtitle: this.user.location ? this.user.location : 'No information' }
+      ]
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    const user = store.getters.getUser
+    if (user) {
+      next(vm => vm.setData(user))
+    } else {
+      next()
     }
   }
 }

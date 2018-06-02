@@ -22,7 +22,7 @@
               <v-icon class="mr-1">edit</v-icon>
               Edit
             </v-btn>
-            <v-btn flat color="red" @click="remove(post._id)">
+            <v-btn flat color="red" @click="dialog = true">
               <v-icon class="mr-1">delete</v-icon>
               Delete
             </v-btn>
@@ -30,6 +30,19 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <v-dialog v-model="dialog" max-width="500px">
+      <v-card>
+        <v-card-title class="justify-center">
+          <div class="subheading">
+            Are you sure you want to delete this post?
+          </div>
+        </v-card-title>
+        <v-card-actions class="justify-center mt-4">
+          <v-btn flat color="red" @click="remove(post._id)">Yes</v-btn>
+          <v-btn flat color="primary" @click.stop="dialog=false">No</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
   <v-container v-else>
     <v-layout row align-center justify-center class="full-height">
@@ -43,7 +56,8 @@ import PostService from '../services/PostService'
 export default {
   name: 'Post',
   data: () => ({
-    post: {}
+    post: {},
+    dialog: false
   }),
   methods: {
     edit (id) {
@@ -53,6 +67,9 @@ export default {
       PostService.deletePost(id)
         .then(() => this.$router.push('/'))
         .catch(error => console.log(error))
+    },
+    showDialog () {
+
     }
   },
   computed: {
@@ -64,7 +81,7 @@ export default {
       return this.post.author === username
     }
   },
-  async mounted () {
+  async created () {
     this.$store.dispatch('setLoading', true)
     const result = await PostService.single(this.$route.params.id)
     if (result) {

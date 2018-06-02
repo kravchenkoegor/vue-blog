@@ -5,6 +5,7 @@ import Home from '@/components/Home'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Profile from '@/components/Profile'
+import EditUser from '@/components/EditUser'
 import Error from '@/components/Error'
 import Post from '@/components/Post'
 import CreatePost from '@/components/CreatePost'
@@ -41,6 +42,12 @@ export default new Router({
       path: '/profile',
       name: 'Profile',
       component: Profile,
+      beforeEnter: isLoggedIn
+    },
+    {
+      path: '/edit_user',
+      name: 'EditUser',
+      component: EditUser,
       beforeEnter: isLoggedIn
     },
     {

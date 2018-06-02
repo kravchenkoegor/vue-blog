@@ -18,7 +18,7 @@ module.exports = {
   async createPost (req, res) {
     try {
       const post = await new Post(req.body).save()
-      res.send(post.toJSON())
+      res.json(post)
     } catch (error) {
       res.status(400).send({
         error: `An error has occured ${error}`
@@ -49,9 +49,9 @@ module.exports = {
   },
   async savePost (req, res) {
     try {
-      const post = await Post.findOneAndUpdate({created: req.body.created}, req.body)
+      const post = await Post.findByIdAndUpdate(req.body.id, req.body)
       post.save()
-      res.send(post.toJSON())
+      res.json(post)
     } catch (error) {
       res.status(400).send({
         error: `An error has occured ${error}`
@@ -60,8 +60,8 @@ module.exports = {
   },
   async deletePost (req, res) {
     try {
-      const post = await Post.findOneAndRemove({_id: req.params.id})
-      res.send(post.toJSON())
+      const post = await Post.findByIdAndRemove(req.params.id)
+      res.json(post)
     } catch (error) {
       res.status(400).send({
         error: `An error has occured ${error}`
