@@ -51,7 +51,7 @@ export default {
     },
     async remove (id) {
       PostService.deletePost(id)
-        .then(() => this.$router.push('/posts'))
+        .then(() => this.$router.push('/'))
         .catch(error => console.log(error))
     }
   },
@@ -79,5 +79,11 @@ export default {
 <style scoped>
   .full-height {
     height: 100vh;
+  }
+
+  .text {
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgba(0, 0, 0 , .7);
   }
 </style>

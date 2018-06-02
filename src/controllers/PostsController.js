@@ -4,7 +4,7 @@ module.exports = {
   async index (req, res) {
     try {
       const count = await Post.count({})
-      const posts = await Post.find({}).limit(9)
+      const posts = await Post.find({}).limit(8)
       res.send({
         count: count,
         posts: posts
@@ -28,7 +28,7 @@ module.exports = {
   async changePage (req, res) {
     try {
       const {page} = req.body
-      const result = await Post.find({}).limit(9).skip((page - 1) * 9)
+      const result = await Post.find({}).limit(8).skip((page - 1) * 8)
       res.send(result)
     } catch (error) {
       res.status(400).send({
@@ -61,7 +61,6 @@ module.exports = {
   async deletePost (req, res) {
     try {
       const post = await Post.findOneAndRemove({_id: req.params.id})
-      //post.save()
       res.send(post.toJSON())
     } catch (error) {
       res.status(400).send({

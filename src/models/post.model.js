@@ -5,7 +5,10 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  created: Date,
+  created: {
+    type: Date,
+    default: Date.now()
+  },
   title: String,
   image: String,
   text: String

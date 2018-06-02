@@ -1,36 +1,42 @@
 <template>
   <v-app id="app">
-    <v-navigation-drawer app v-model="drawer" class="hidden-md-and-down">
-      <v-list v-if="isUserLoggedIn">
-        <v-list-tile class="text-xs-center" @click="toCreate">
-          <v-btn color="primary" flat>
-            <v-icon class="mr-1">create</v-icon>
-            Create post
-          </v-btn>
-        </v-list-tile>
-        <v-list-tile class="text-xs-center" @click="toProfile">
-          <v-btn color="primary" flat>
-            <v-icon class="mr-1">person</v-icon>
-            Profile
-          </v-btn>
-        </v-list-tile>
-        <v-list-tile class="text-xs-center" @click="logOut">
-          <v-btn color="primary" flat >
-            <v-icon class="mr-1">exit_to_app</v-icon>
-            Log Out
-          </v-btn>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
+    <!--<v-navigation-drawer-->
+      <!--app-->
+      <!--v-model="drawer"-->
+      <!--v-if="isUserLoggedIn"-->
+    <!--&gt;-->
+      <!--<v-list >-->
+        <!--<v-list-tile class="text-xs-center" @click="toCreate">-->
+          <!--<v-btn color="primary" flat>-->
+            <!--<v-icon class="mr-1">create</v-icon>-->
+            <!--Create post-->
+          <!--</v-btn>-->
+        <!--</v-list-tile>-->
+        <!--<v-list-tile class="text-xs-center" @click="toProfile">-->
+          <!--<v-btn color="primary" flat>-->
+            <!--<v-icon class="mr-1">person</v-icon>-->
+            <!--Profile-->
+          <!--</v-btn>-->
+        <!--</v-list-tile>-->
+        <!--<v-list-tile class="text-xs-center" @click="logOut">-->
+          <!--<v-btn color="primary" flat >-->
+            <!--<v-icon class="mr-1">exit_to_app</v-icon>-->
+            <!--Log Out-->
+          <!--</v-btn>-->
+        <!--</v-list-tile>-->
+      <!--</v-list>-->
+    <!--</v-navigation-drawer>-->
     <v-toolbar app dark class="primary">
       <v-toolbar-side-icon
         @click.stop="drawer = !drawer"
+        v-if="isUserLoggedIn"
         class="hidden-md-and-up"
       >
       </v-toolbar-side-icon>
-      <v-toolbar-title @click="toHome" class="pointer">
+      <v-toolbar-title @click="toHome" class="pointer hidden-sm-and-down">
         <h4>Application</h4>
       </v-toolbar-title>
+      <v-spacer></v-spacer>
       <div class="hidden-md-and-down d-flex">
         <v-btn
           v-if="isUserLoggedIn"

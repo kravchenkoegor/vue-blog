@@ -19,7 +19,6 @@
             multi-line
             required
           ></v-text-field>
-
           <v-btn
             :disabled="!valid"
             @click="submit"
@@ -41,18 +40,15 @@ export default {
   name: 'CreatePost',
   data: () => ({
     valid: true,
-    author: JSON.parse(localStorage.getItem('user')).username,
     title: '',
     image: '',
     text: ''
   }),
-
   methods: {
     submit () {
       if (this.$refs.form.validate()) {
         const newPost = {
-          author: this.author,
-          created: new Date(),
+          author: JSON.parse(localStorage.getItem('user')).username,
           title: this.title,
           image: this.image,
           text: this.text

@@ -66,14 +66,13 @@
         this.$router.push('/post/' + id)
       }
     },
-    // request posts from database
     async mounted () {
       this.$store.dispatch('setLoading', true)
       const result = await PostService.index()
       if (result) {
         this.$store.dispatch('setLoading', false)
         this.posts = result.posts
-        this.length = Math.ceil(result.count / 9)
+        this.length = Math.ceil(result.count / 8)
       }
     }
   }
