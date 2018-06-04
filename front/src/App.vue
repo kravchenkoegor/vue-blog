@@ -113,4 +113,10 @@ export default {
   .pointer {
     cursor: pointer;
   }
+
+  @media only screen and (max-width: 599px) {
+    .container {
+      padding: 16px;
+    }
+  }
 </style>

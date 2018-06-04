@@ -8,7 +8,7 @@
         </v-avatar>
       </v-flex>
 
-      <v-flex xs12 md8>
+      <v-flex xs12 md8 class="mt-xs">
         <v-list two-line subheader>
           <v-list-tile v-for="item in items" :key="item.title" avatar @click="">
             <v-list-tile-avatar>
@@ -82,4 +82,13 @@ export default {
 </script>
 
 <style scoped>
+  .mt-xs {
+    margin-top: 32px;
+  }
+
+  @media (min-width: 960px) {
+    .mt-xs {
+      margin-top: 0;
+    }
+  }
 </style>
