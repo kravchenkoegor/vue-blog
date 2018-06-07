@@ -17,9 +17,9 @@ Application is based on Vue.js framework called [Vuetify.js](https://vuetifyjs.c
 
 ### How to use
 
-`git clone
-npm install
-npm start
-cd front && npm install
-npm run dev`
+`git clone`
+`npm install`
+`npm start`
+`cd front && npm install`
+`npm run dev`
 
