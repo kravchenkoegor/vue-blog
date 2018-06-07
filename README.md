@@ -1,5 +1,4 @@
-## Pretty simple blog single-page application written on MEVN stack
-## (MongoDB, Express, Vue.js, Node.js)
+## Pretty simple blog single-page application written on MEVN stack (MongoDB, Express, Vue.js, Node.js)
 
 ### [Live demo](https://warm-castle-13681.herokuapp.com/)
 
