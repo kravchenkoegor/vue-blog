@@ -1,6 +1,8 @@
 ## Pretty simple blog single-page application written on MEVN stack
 (MongoDB, Express, Vue.js, Node.js)
 
+### [Live demo](https://warm-castle-13681.herokuapp.com/)
+
 ### Functions:
 
 * Register a new user
@@ -18,8 +20,12 @@ Application is based on Vue.js framework called [Vuetify.js](https://vuetifyjs.c
 ### How to use
 
 `git clone`
+
 `npm install`
+
 `npm start`
+
 `cd front && npm install`
+
 `npm run dev`
 
