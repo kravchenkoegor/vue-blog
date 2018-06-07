@@ -22,20 +22,20 @@ module.exports = {
         res.status(400).send({ success: false, message: 'User not found' })
       } else {
         database.comparePassword(password, user.password)
-            .then(() => {
-              const token = jwt.sign(user.toJSON(), config.secret, {
-                expiresIn: 604800 // 1 week
-              })
-              res.json({
-                success: true,
-                token: `jwt ${token}`,
-                user: user.toJSON()
-              })
+          .then(() => {
+            const token = jwt.sign(user.toJSON(), config.secret, {
+              expiresIn: 604800 // 1 week
             })
-            .catch(err => {
-              console.log(err)
-              res.json({ success: false, message: 'Wrong password' })
+            res.json({
+              success: true,
+              token: `jwt ${token}`,
+              user: user.toJSON()
             })
+          })
+          .catch(err => {
+            console.log(err)
+            res.json({ success: false, message: 'Wrong password' })
+          })
       }
     } catch (error) {
       res.status(400).send({
