@@ -15,16 +15,3 @@
 * You can add personal info or edit it
 
 Application is based on Vue.js framework called [Vuetify.js](https://vuetifyjs.com/en/)
-
-### How to use
-
-`git clone`
-
-`npm install`
-
-`npm start`
-
-`cd front && npm install`
-
-`npm run dev`
-
