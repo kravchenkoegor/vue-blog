@@ -1,4 +1,5 @@
-## Pretty simple blog single-page application written on MEVN stack (MongoDB, Express, Vue.js, Node.js)
+## Pretty simple blog single-page application written on MEVN stack
+(MongoDB, Express, Vue.js, Node.js)
 
 ### Functions:
 
