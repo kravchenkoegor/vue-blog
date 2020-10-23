@@ -1,8 +1,11 @@
-const mongoose = require ('mongoose')
+const { Schema, model } = require('mongoose');
 
-const picSchema = new mongoose.Schema({
-  type: String,
-  url: String
-})
+const Pic = model(
+  'photos',
+  new Schema({
+    type: String,
+    url: String,
+  })
+);
 
-module.exports = Pic = mongoose.model('photos', picSchema)
+module.exports = Pic;
